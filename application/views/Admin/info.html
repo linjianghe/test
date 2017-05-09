@@ -1,0 +1,77 @@
+<?php $this->load->view('header.html');?>
+<section class="embed_page">
+    <style type="text/css">
+        .dingding_userinfo_data{
+            padding:3em;
+            font-size: 16px;
+        }
+        .dingding_userinfo_data li{
+            padding-bottom:2em;
+        }
+        .dingding_userinfo_data li label{
+            display: inline-block;
+            width:8em;
+            text-align: right;
+        }
+        .dingding_userinfo_data li span{
+            color:#999;
+        }
+        .dingding_userinfo_data li input{
+            border: solid 1px #ccc;
+            padding: .3em.5em;
+            width: 12em;
+        }
+        .dingding_changepass .submit{
+            padding: 2em 0 2em 8.5em;
+        }
+        .dingding_changepass .submit button{
+            border: none;
+            background-color: #53befb;
+            color: #fff;
+            padding: .5em 3em;
+            border-radius: 4px;
+        }
+    </style>
+    <header class="dingding_userinfo_menu tab_menu">
+        <ul>
+            <li class="current"><a href="">基本信息</a></li><li><a href="">修改密码</a></li>
+        </ul>
+    </header>
+    <section class="dingding_userinfo_data">
+        <div class="dingding_userinfo">
+            <ul>
+                <li>
+                    <label>用户名：</label>
+                    <span><?=$username?></span>
+                </li>
+                <li>
+                    <label>姓名：</label>
+                    <span><?=$name?></span>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="dingding_userinfo_data" style="display: none;">
+        <div class="dingding_changepass">
+            <ul>
+                <li>
+                    <label>旧密码：</label>
+                    <input type="password" class="oldpwd" />
+                </li>
+                <li>
+                    <label>新密码：</label>
+                    <input type="password" class="newpwd" autocomplete="new-password" />
+                </li>
+                <li>
+                    <label>确认新密码：</label>
+                    <input type="password" class="newpwd2" />
+                </li>
+            </ul>
+            <div class="submit">
+                <button type="button">保 存</button>
+            </div>
+        </div>
+
+    </section>
+</section>
+<?php $this->load->view('footer.html');?>

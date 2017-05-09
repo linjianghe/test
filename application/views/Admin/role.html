@@ -1,0 +1,58 @@
+<?php $this->load->view('header.html');?>
+<section class="embed_page" id="Admin">
+    <header class="authority_manager_menu tab_menu">
+        <ul>
+            <li><a href="/admin/index">账号</a></li><li class="current"><a href="/admin/role">角色</a></li>
+        </ul>
+    </header>
+    <div class="authority_data_list" style="margin-top:1em;">
+        <table class="table_m1 tb1" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th scope="col">角色名称</th>
+                    <th scope="col" class="bg_blue" width="30%">备注</th>
+                    <th scope="col" >添加时间</th>
+                    <th scope="col" class="bg_blue">修改时间</th>
+                    <th scope="col">相关操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($role_list as $key=>$val){?>
+                <tr>
+                    <td><?=$val['role_name']?></td>
+                    <td><?=$val['remark']?></td>
+                    <td><?=$val['add_time']?></td>
+                    <td><?=$val['edit_time']?></td>
+                    <td>
+                        <div class="cz" data-authority='<?=json_encode($val)?>'>
+                            <span class="role_edit public_edit">编辑</span>
+                            <span class="role_del public_del" data-id="<?=$val['id']?>" data-del="<?=$val['id']?>" >删除</span>
+                        </div>
+                    </td>
+                </tr>
+            <?php }?>
+            </tbody>
+        </table>
+		<div class="yjbtn">
+			<button type="button" class="sbp_add_btn" id="roleAdd">新增角色</button>
+		</div>
+    </div>
+</section>
+<?php $this->load->view('footer.html');?>
+<script type="html/module" id="uTemplate">
+    <div class="authority_box">
+        <header>
+            <span class="role_name">
+                <label>角色：</label>
+                <input type="text" id="roleName" maxlength="10" />
+            </span>
+            <span class="role_note">
+                <label>备注：</label>
+                <input type="text" id="roleNote" maxlength="50" style="width:265px;" />
+            </span>
+        </header>
+        <div class="authority_list" id="authorityTree1">
+            <?=$template?>
+        </div>
+    </div>
+</script>

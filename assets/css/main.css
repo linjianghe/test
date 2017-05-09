@@ -1,0 +1,991 @@
+﻿/* 
+ * CSS Document for 中钛新
+ * http://xxx.com/
+ *
+ * Copyright 2016, wen
+ * http://www.xxx.com/
+ *
+ * Date: 2016-xx-xx
+ * 1、通用
+ * 2、登录
+ * 3、首次登录修改密码
+ * 4、管理首页
+ * 5、用户管理
+ * 6、账号权限
+ * 7、短信
+ * 8、体检数据
+ * 9、预警处理
+ * 10、体检分析
+ */
+
+/*--1、通用--*/
+html,body{
+	height:100%;
+	width:100%;
+	font-family:'Microsoft YaHei',\5FAE\8F6F\96C5\9ED1,'SimHei',\9ED1\4F53,'LiHei Pro Medium';
+	font-size:14px;
+	background-color:#fafafa;
+}
+@font-face {font-family: 'iconfont';
+	src: url('../font/iconfont.eot'); /* IE9*/
+	src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('../font/iconfont.woff') format('woff'), /* chrome、firefox */
+	url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+	url('../font/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.iconfont{
+	font-family:"iconfont" !important;
+	font-size:16px;font-style:normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale;
+}
+.manager_page{
+	overflow:hidden;
+}
+.scrollbar{
+	overflow-y:auto !important;
+}
+input,button{
+	font-family:'Microsoft YaHei',\5FAE\8F6F\96C5\9ED1,'SimHei',\9ED1\4F53,'LiHei Pro Medium';
+}
+a,button{
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+.bg_blue{
+	background-color:#2da2e5 !important;	
+}
+.bg_grey{
+	background-color:#ececec !important;	
+}
+.bg_blue1{
+	background-color:#0173b2 !important;
+}
+.bg_orange{
+	background-color:#ffcd35 !important;
+}
+.bg_red{
+	background-color:#e30a20 !important;
+}
+.t_grey{
+	color:#888 !important;	
+}
+.f_green{
+	color:#00a021 !important;
+}
+.f_blue{
+	color:#009df4 !important;
+}
+.f_blue1{
+	color:#0173b2 !important;
+}
+.f_red{
+	color:#e30a20 !important;
+}
+.f_orange{
+	color:#ffcd35 !important;
+}
+.f_green{
+	color:#00a021 !important;
+}
+.bg_disable{
+	color:#888 !important;
+	background-color:#ececec !important;	
+}
+.underline{
+	border-bottom:solid 1px;
+}
+.tips_click{
+	background:url(about:blank) !important;
+}
+.btn{
+	padding:.5em;
+	border:none;
+	border-radius:4px;	
+	color:#fff;
+	cursor:pointer;
+}
+.btn_blue{
+	background-color:#2da2e5;
+}
+.btn_blue:hover{
+	background-color:#53befb;
+}
+.disabled_btn{
+	background-color: #ccc !important;
+    color: #eee !important;
+    cursor: default !important;
+}
+.tab_menu{
+	border-bottom:solid 1px #2da2e5;
+}
+.tab_menu li{
+	border:solid 1px #2da2e5;
+	border-bottom:none;
+	margin-left: -1px;
+	display:inline-block;
+	*display:inline;
+	zoom:1;
+}
+.tab_menu li.current{
+	background-color:#2da2e5;
+}
+
+.tab_menu li a{
+	display:block;
+	width:8em;
+	text-align:center;
+	padding:.4em 0;
+	color:#0173b2;
+	font-size:1.3em;
+}
+.tab_menu li.current a{
+	color:#fff;	
+}
+.box_m1{
+	width:25em;
+	margin:0 auto;
+	border:solid 1px #ddd;
+	border-radius:4px;
+	box-shadow:0 3px 3px #eaeaea;
+	background-color:#fff;
+}
+.box_m1 li{
+	height:65px;
+	position:relative;
+	padding-left:60px;
+	border-bottom:solid 1px #ddd;
+}
+.box_m1 label{
+	position:absolute;
+	font-size:1.45em;
+	color:#d5d5d5;
+	left:70px;
+	top:0;
+	z-index:1;
+	line-height:65px;
+}
+.box_m1 input{
+	font-size: 1.45em;
+    border: none;
+    padding: .5em;
+    margin-top: .5em;
+    width: 12em;
+	position:relative;
+	z-index:2;
+	background:none;
+	outline:none;
+	zoom:1;
+}
+.box_m1 .btn{
+	width:80%;
+	font-size: 1.45em;
+	letter-spacing: .4em;
+}
+.table,.table th,.table td{
+	border: solid 1px #ccc;
+}
+.table th,.table td{
+	padding:.5em;
+	text-align:center;
+	font-weight:normal;
+}
+.table_m1,.table_m1 td{
+	border: solid 1px #ccc;
+}
+.table_m1 th,.bg-color{/* 新增样式 */
+	font-size:1.15em;
+	font-weight:normal;
+	color:#fff;	
+	padding:.6em;
+	vertical-align:middle;
+	background-color:#53befb;
+}
+.table_m1 td{
+	padding:.8em .5em;
+	text-align:center;
+	vertical-align:middle;
+	word-break: break-all;	
+}
+.table_m1 td select{
+background: transparent;
+    border: none;
+}
+.table_m1 .subTable td{
+	border:0px;
+	}
+.table_m1 tbody tr:hover{
+	/*background-color:#dadada !important;*/
+}
+.u_details,.u_edit,.u_detail,.u_edits,.u_bianji,.sms_edit,.sms_save,.sms_cancel,.yj_edit,.yj_save,.yj_cancel,.yj_del,.analysis_edit,.admin_bianji,
+.public_edit,
+.public_del{  /* 增加样式 */
+	font-size:1.15em;
+	cursor:pointer;
+	border-bottom:solid 1px;
+}
+.u_detail,.u_details{
+	color:#00a021;
+	margin-right:.5em;
+}
+.u_edit,.u_edits,.u_bianji,.public_edit{
+	color:#3db2f6;
+	margin-left:.5em;
+}
+.public_del{
+    color:#e30a20;
+}
+.role_del{
+    margin: 0 0 0 .5em;
+}
+.role_edit{
+    margin:0;
+}
+.table_m2 th,.table_m2 td{
+	padding:.5em;
+	font-size:1.15em;
+	text-align:center;
+	border:solid 1px #ccc;
+	font-weight:normal;
+	vertical-align:middle;
+}
+.table_m2 td span[contenteditable],span[contenteditable]{
+	display:block;
+	min-height:1em;
+}
+.table_m2 .input{
+    text-align: left;
+}
+.pagebox{
+	margin:5.6em 0 2em;
+}
+.pagebox a{
+	display:inline-block;
+	color:#000;
+	border:solid 1px #ccc;
+	font-size:1.15em;
+	padding:.5em .8em;
+	margin:.5em 0;
+}
+.pagebox .current{
+	background-color:#2da2e5;
+	color:#fff;
+}
+.pagebox form{
+	display:inline-block;
+	padding-left:2em;
+	font-size:1.15em;
+	zoom:1;
+	*display:inline;
+	*vertical-align:text-bottom;
+}
+.pagebox input{
+	border:solid 1px #ccc;
+	text-align:center;
+	width:3em;
+	padding:.5em 0;
+	background:none;
+	*vertical-align:middle;
+}
+.pagebox button{
+	padding:.5em .5em;
+	cursor:pointer;
+	border:solid 1px #ccc;
+	background-color:#ececec;	
+	*padding:.3em .5em;
+	*vertical-align:middle;
+}
+/*弹框通用*/
+body .popup-class{
+	background:#fafafa;
+	border: solid 1px #ccc; 
+	border-radius:0;
+}
+body .popup-class .layui-layer-btn{
+	text-align:center;
+	padding:0 0 2em 0;
+	font-size:1.15em;
+	letter-spacing: .2em;
+}
+body .popup-class .layui-layer-title{
+	background:none;
+	border:none;
+	height:1.5em;
+}
+body .popup-class .layui-layer-content{
+	padding-top:.5em;
+}
+body .popup-class .layui-layer-btn a{
+	color:#fff;
+	border-radius:4px;
+}
+body .popup-class .layui-layer-btn .layui-layer-btn0,
+body .popup-class .layui-layer-btn .layui-layer-btn1,
+body .popup-class .layui-layer-btn .layui-layer-btn2{
+	background-color:#2da2e5;
+	padding:.3em 0em;
+	border:none;
+	margin:0 1em;
+	width: 7em;
+}
+
+body .popup-zIndex-class{
+	z-index:2147483648 !important;
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+	height: 12px;
+}
+::-webkit-scrollbar-track {
+	background-color: rgba(255, 255, 255, 0.1);
+	-webkit-border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.4);
+	-webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+/*--2、登录--*/
+.login_t{
+	padding:3em 0 2.2em;
+}
+.login_t h1{
+	font-size:3em;
+}
+.loginbody li{
+	padding-left:60px;
+}
+.username_ico{
+	background:url(../images/icon_list.png) no-repeat 16px 16px;
+}
+.password_ico{
+	background:url(../images/icon_list.png) no-repeat 16px -50px;
+}
+.login_btn{
+	padding:2.8em 0 2em;
+}
+.err_tips{
+	display:none;
+	padding: 0 1em 2em;
+	color:#f00;
+}
+
+/*--3、首次登录修改密码--*/
+.changepassbox .err_tips{
+	padding: 1em 1em 1.5em;  
+    display: block;
+}
+.changepass_btn{
+	padding-bottom:2em;
+}
+
+/*--4、管理首页--*/
+.header{
+	height:70px;
+	position:relative;
+	background-color:#4d8bd4;
+}
+.logo_white{
+	position:absolute;
+	left:0;
+	top:0;
+	display:block;
+	width:220px;
+	height:70px;
+	background-color:#0173b2;
+}
+.header h1{
+	padding-left:270px;
+	font-size:1.7em;
+	line-height:70px;
+	color:#fff;
+}
+.current_user{
+	position: absolute;
+    right: 100px;
+    padding-left: 30px;
+    height: 20px;
+    color: #fff;
+    background: url(../images/icon_list.png) no-repeat -7px -1160px;
+    top: 25px;
+}
+.exit_admin{
+	position:absolute;
+	right:0;
+	top:0;
+	width:70px;
+	height:70px;
+	line-height:70px;
+	color:#fff;
+	cursor:pointer;
+	background-color:#2363bb;
+}
+.menu{
+	position:absolute;
+	width:220px;
+	height:auto;
+	top:70px;
+	left:0;
+	bottom:0;
+	background-color:#53befb;
+	overflow:hidden;
+}
+.menu ul{
+	width:220px;
+	margin-bottom:2em;
+}
+.menu li a{
+	display:block;
+	/*height:50px;
+	line-height:50px;*/
+	padding:.9em .5em .9em 3em;
+	color:#ffffff;
+	font-size:1.3em;
+	border-bottom:solid 1px #9fdbfd;
+	background-repeat:no-repeat;
+	-webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+.menu li .icon{
+	margin-right:20px;
+	}
+.menu li a:hover{
+	color:#1a8ae0;
+	background-color:#fafafa;
+}
+.menu li.current a{
+	color:#1a8ae0;
+	background-color:#fafafa;
+}
+
+.menu li a.menu_ico{
+    background-position:42px -433px;
+}
+.menu li.current a.menu_ico{
+    background-position:42px -932px;
+}
+.menu li a.ico_1{
+	background-position:42px -131px;
+}
+.menu li.current a.ico_1{
+	background-position:42px -630px;
+}
+.menu li a.ico_2{
+	background-position:42px -185px;
+}
+.menu li.current a.ico_2{
+	background-position:42px -684px;
+}
+.menu li a.ico_3{
+	background-position:42px -233px;
+}
+.menu li.current a.ico_3{
+	background-position:42px -732px;
+}
+.menu li a.ico_4{
+	background-position:42px -283px;
+}
+.menu li.current a.ico_4{
+	background-position:42px -782px;
+}
+.menu li a.ico_5{
+	background-position:42px -332px;
+}
+.menu li.current a.ico_5{
+	background-position:42px -831px;
+}
+.menu li a.ico_6{
+	background-position:42px -382px;
+}
+.menu li.current a.ico_6{
+	background-position:42px -881px;
+}
+.menu li a.ico_7{
+	background-position:42px -433px;
+}
+.menu li.current a.ico_7{
+	background-position:42px -932px;
+}
+.menu li a.ico_8{
+	background-position:42px -483px;
+}
+.menu li.current a.ico_8{
+	background-position:42px -982px;
+}
+.menu li a.ico_9{
+	background-position:42px -533px;
+}
+.menu li.current a.ico_9{
+	background-position:42px -1032px;
+}
+.menu li a.ico_10{
+	background-position:42px -582px;
+}
+.menu li.current a.ico_10{
+	background-position:42px -1081px;
+}
+.menu li a.ico_11{
+	background-position:42px -1380px;
+}
+.menu li.current a.ico_11{
+	background-position:42px -1461px;
+}
+
+
+.frameContainer{
+	position:absolute;
+	top:70px;
+	left:220px;
+	bottom:0;
+	right:0;
+	background-color:#fafafa;
+}
+.loading{
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:100;
+	width:100%;
+	height:100%;
+	background:url(../images/loader-icon.gif) no-repeat center center #fafafa;
+}
+#mainFrame{
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+
+
+/*--5、用户管理--*/
+.embed_page{
+	padding:1.5em 3.8em;
+}
+.user_manager_menu{
+	border-bottom:solid 1px #2da2e5;
+}
+.user_manager_menu li{
+	border:solid 1px #2da2e5;
+	border-bottom:none;
+	display:inline-block;
+	*display:inline;
+	zoom:1;
+}
+.user_manager_menu li.current{
+	background-color:#2da2e5;
+}
+
+.user_manager_menu li a{
+	display:block;
+	width:8em;
+	text-align:center;
+	padding:.4em 0;
+	color:#2da2e5;
+	font-size:1.3em;
+}
+.user_manager_menu li.current a{
+	color:#fff;
+}
+.manager_search{
+	padding:1em 0;
+}
+.search_box{
+	width:21em;
+	height:2.8em;
+	position:relative;
+	border:solid 1px #ccc;
+	border-radius:6px;
+	background:url(../images/icon_list.png) no-repeat 0 -1210px;
+}
+.search_box label{
+	position: absolute;
+    color: #d5d5d5;
+    left: 38px;
+    top: 10px;
+    z-index: 1;
+}
+.search_box button{
+	background-color: #ccc;
+    border: none;
+    height: 100%;
+    width: 4em;
+	border:none;
+	font-size:1.3em;
+	position:absolute;
+	right:0;
+	top:0;
+	cursor:pointer;
+	border-radius:0 6px 6px 0;
+}
+.search_box input{
+	padding:.5em .9em .5em 38px;
+	background:none;
+	border:none;
+	position:relative;
+	z-index:2;	
+	font-size:1.2em;
+	width:10em;
+}
+.add_new,.add_btn{/* 新增样式 */
+	position:absolute;
+	top:1em;
+	left:22em;
+	border:solid 1px #0173b2;
+	background:none;
+	color:#0173b2;
+	height:2.9em;
+	width:6em;
+	border-radius: 6px;
+	cursor:pointer;
+}
+.add_btn{ 
+	position: relative;
+	left: 50%;
+	top: 0;
+	transform:translateX(-50%);
+	margin-top: 8em;
+	outline: none;
+}
+.add_new .ico,.add_btn .ico{
+	font-size:1.3em;
+	padding-left:25px;
+	background:url(../images/icon_list.png) no-repeat 0 -1287px;
+}
+.u_province select{
+	width: 7em;
+    margin-right: .5em;
+    padding: 5px;
+}
+
+/* 6、账号权限样式 */
+.tempbox{
+    width: 230px;
+    vertical-align: top;
+    border: 1px solid #ececec;
+    padding-bottom: 1em;
+    text-align: center;
+    display: none;
+    *display: none;
+    *zoom:1;
+}
+.close_tempbox{
+    right:10px;
+    top:12px;
+    width:16px;
+    height:16px;
+    cursor: pointer;
+    background: url(../js/layer_pc/skin/default/icon.png) no-repeat 0 -40px;
+}
+.temp_ie{
+    position: relative;
+    display: inline-block;
+    *display: inline!important;
+    *zoom:1;
+    z-index: 1000000000;
+    background-color:#fafafa;
+}
+.tempbox .bianji{
+    background-color: #ececec;
+    color: #000;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    margin-bottom: .3em;
+}
+.tempbox .line span{
+    width: 9%;
+    height: 1px;
+    line-height: 1px;
+    display: inline-block;
+    *display: inline-block!important;
+    margin: 0 2%;
+    background: #ccc;
+    color: #ccc;
+}
+.tempbox .quanxian{
+    width: 100%;
+    text-align: center;
+}
+.tempbox .quanxian>p{
+    text-align: left;
+    text-indent: 4.5em;
+}
+.tempbox .resetpwd,.tempbox .content,.addcontent{
+    width: 30%;
+    margin-top: 10px;
+    font-size: 1.1em;
+    color: #000;
+    display: inline-block;
+    padding: .3em .5em;
+    border: 1px solid #a0a0a0;
+    border-radius: 5px;
+    -ms-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    cursor:pointer;
+}
+.tempbox .setIdentity{
+    text-align: center;
+    padding: 0 8px 0 24px;
+    margin-top: 10px;
+}
+.tempbox .setIdentity select{
+    width: 80px;
+    display: inline-block;
+}
+.tempbox .setIdentity input{
+    width: 117px;
+    outline: none;
+    border:none;
+    border:1px solid #ccc;
+}
+.tempbox .setIdentity span{
+    width: 50px;
+    float: left;
+    color: #000;
+}
+.tempbox .setIdentity .loginName{
+    margin-top: 10px;
+}
+.tempbox .loginName input{
+    outline: none;
+    color: #000;
+}
+.tempbox .loginName input::-webkit-input-placeholder{
+    color: #999;
+}
+.tempbox .loginName ::-moz-placeholder{
+    color: #999;
+}
+.tempbox .loginName :-moz-placeholder{
+    color: #999;
+}
+/* 编辑提亮部分样式 */
+.tiliang{
+    position: relative;
+    z-index: 9919891016;
+}
+.tiliangcol{
+    position: relative;
+    z-index: 19891016;
+    background: #fafafa!important;
+	color:#000;
+}
+/* 兼容ie的隐藏样式 */
+.ienone{
+    *display: none!important;
+    *zoom:1;
+}
+
+.ruler_box{
+	width: 548px;
+    height: 30px;
+}
+.ruler_box .ruler{
+	top:15px;
+	-webkit-transition: all 1.2s ease-in-out;
+    -o-transition: all 1.2s ease-in-out;
+    transition: all 1.2s ease-in-out;
+}
+.ruler_box .ruler span{
+	left:100%;
+	top:-.6em;
+	font-weight:bold;
+	background-color:#fff;
+    white-space: nowrap;
+}
+.zc{
+	color:#0173b2;
+	border-bottom:solid 3px #0173b2;
+}
+.yc_l{
+	color:#ffcd35;
+	border-bottom:solid 3px #ffcd35;
+
+}
+.yc_s{
+	color:#ffcd35;
+	border-bottom:solid 3px #ffcd35;
+}
+.wx_l{
+	color:#ff0000;
+	border-bottom:solid 3px #ff0000;
+}
+.wx_s{
+	color:#ff0000;
+	border-bottom:solid 3px #ff0000;
+}
+.back_box{
+	padding:3em 0;
+}
+.back_box .btn{
+	width:5em;
+	font-size:1.15em;
+	display:inline-block;
+}
+
+/*-- 9、预警处理页面样式 --*/
+.sbp,.dbp,.glu,.glu2,.hba1c,.hba1,.dongmai,.jingmai{
+	width: 45%;
+	display: inline-block;
+	*display: inline!important;
+    *zoom:1;
+	vertical-align: top;
+}
+.sbp,.glu,.hba1c,.dongmai{
+	margin-right: 8%;
+}
+.tname{
+	width: 100%;
+	line-height: 3em;
+	padding-top: 1em;
+}
+.tname p{
+	float: left;
+	font-size: 1.5em;
+}
+.tname span{
+	float: right;
+}
+.yjbtn,.yjbianji{
+	text-align:center;
+}
+.sbp_add_btn,.yjcancel_btn,.yjsave_btn{
+	display:inline-block;
+	width:6em;
+	height:2.9em;
+	background:#2da2e5;
+	border:solid 1px #2da2e5;
+	border-radius: 6px;
+	cursor:pointer;
+	outline: none;
+	color:#fff;
+	text-align: center;
+	margin:2em 1em;
+	*display:inline;
+	zoom:1;
+}
+
+/*--权限改版--*/
+.u_bianji {
+	margin-left: 0;
+}
+body .popup-authority {
+	border: solid 3px #01679f;
+}
+body .popup-authority .layui-layer-content {
+	padding: 0;
+}
+body .popup-authority .layui-layer-title {
+	height: 10px;
+	background-color: #fff;
+	border: none;
+}
+body .popup-authority .layui-layer-btn {
+	padding-bottom: 26px;
+	text-align: center;
+}
+body .popup-authority .layui-layer-btn a {
+	color: #fff;
+	font-size: 16px;
+	border-radius: 4px;
+}
+body .popup-authority .layui-layer-btn .layui-layer-btn0,
+body .popup-authority .layui-layer-btn .layui-layer-btn1,
+body .popup-authority .layui-layer-btn .layui-layer-btn2 {
+	background-color: #2da2e5;
+	padding: .3em 0em;
+	border: none;
+	margin: 0 1em;
+	width: 7em;
+}
+.authority_cz {
+	margin-top: 5em;
+	text-align: center;
+}
+.authority_cz button {
+	font-size: 18px;
+	width: 100px;
+	margin: 0 2em;
+}
+.authority_box {
+	font-size: 16px;
+}
+.authority_box header {
+	padding: 0 10px 10px;
+	border-bottom: solid 1px #ccc;
+	text-align: center;
+}
+.authority_box header button.current {
+	background-color: #5a6984;
+	border: solid 1px #5a6984;
+	color: #fff;
+}
+.authority_box header .authority_type_box {
+	display: none;
+}
+.authority_box select,
+.authority_box input {
+	border: solid 1px #ccc;
+	padding: .3em;
+}
+.authority_box select {
+	width: 90px;
+	margin-right: 1em;
+}
+.authority_box input {
+	width: 135px;
+	margin-right: 1em;
+}
+.authority_type {
+	padding: .4em 0;
+	cursor: pointer;
+	margin: 0 .6em;
+	background-color: #efefef;
+	border: solid 1px #ccc;
+	border-radius: 2px;
+	width: 7em;
+}
+/*权限列表*/
+.authority_list {
+	height: 260px;
+	overflow: auto;
+	border-bottom: solid 1px #ccc;
+	margin-bottom: 26px;
+	padding: 10px;
+	background-color: #efefef;
+}
+.authority_list table {
+	background-color: #fff;
+}
+.authority_list table tbody label {
+	display: inline-block;
+	margin-right: 10px;
+}
+.authority_list td,
+.authority_list th {
+	text-align: left;
+	vertical-align: middle;
+}
+.authority_list .checkbox_ui {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-right: 5px;
+	background: url("../images/checkbox.png") no-repeat;
+}
+.authority_list .checkeds {
+	background: url("../images/checkbox.png") no-repeat 0 -12px;
+}
+.authority_list .checked {
+	background: url("../images/checkbox.png") no-repeat 0 -24px;
+}
+.authority_list .categroy {
+	width: 130px;
+}

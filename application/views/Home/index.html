@@ -1,0 +1,46 @@
+<!doctype html>
+<html class="manager_page">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta name="ROBOTS" content="NOARCHIVE" />
+<title><?=$this->config->item('admin_title')?></title>
+<link type="text/css" rel="stylesheet" href="/assets/css/reset.css" />
+<link type="text/css" rel="stylesheet" href="/assets/css/animate.min.css" />
+<link type="text/css" rel="stylesheet" href="/assets/css/mainA.css" />
+<!--[if lt IE 9]>
+<script type="text/javascript">
+var h5Block = 'header,footer,section,aside,article,nav,hgroup,figure,figcaption,details,summary';
+var h5Inline = 'time,mark,ruby,rt,rp,output,keygen,meter,progress,command,source';
+var h5Other = 'video,audio,canvas,datalist';
+var h5Elem = (h5Block + ',' + h5Inline + ',' + h5Other).split(',');
+for(var i=0;i<h5Elem.length;i++){
+    document.createElement(h5Elem[i]);
+}
+</script>
+<![endif]-->
+</head>
+<body class="manager_page">
+<header class="header">
+	<a href="/home/index" class="logo_white tc"><img src="/assets/images/icon.jpg" class="vm" alt="<?=$this->config->item('admin_title')?>" /> </a>
+    <h1><?=$this->config->item('admin_title')?></h1>
+    <p class="current_user"><?=$username?></p>
+    <a href="/admin/logout" class="exit_admin tc">退出</a>
+</header>
+<nav class="menu">
+	<ul>
+        <li id="menuList_1" class="current"><a href="/admin/info#menuList_7" target="mainFrame" class="ico_1 menu_ico"><span class="icon iconfont">&#xe62a;</span>个人信息</a></li>
+        <li id="menuList_3"><a href="/admin/index#menuList_3" target="mainFrame" class="ico_1 menu_ico"><span class="icon iconfont">&#xe60f;</span>权限管理</a></li>
+    </ul>
+</nav>
+
+<section class="frameContainer">
+	<iframe src="/admin/info#menuList_7" name="mainFrame" id="mainFrame" frameborder="no" scrolling="auto" hidefocus="" allowTransparency="true"></iframe>
+</section>
+<script type="text/javascript" src="/assets/js/wow.min.js"></script>
+<script type="text/javascript" src="/assets/js/json2.js"></script>
+<script data-main="/assets/js/main" src="/assets/js/require.js"></script>
+</body>
+</html>
