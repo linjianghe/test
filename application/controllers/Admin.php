@@ -49,6 +49,7 @@ class Admin extends Lin {
 		if ($this->username) {
 			redirect(base_url() . 'home/index');
 		}
+		$this->load->view('Admin/login.html');
 	}
 
 	public function login_check() {
