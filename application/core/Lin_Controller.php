@@ -91,5 +91,31 @@ class Lin extends CI_Controller {
 		}
 	}
 
+	protected function showAction() {
+		$this->load->model('role');
+		$admin_role_node = $this->role->admin_role_node($this->admin_id);
+		$arr = array(
+			'look' => 1,
+			'add' => 1,
+			'edit' => 1,
+			'del' => 1,
+		);
+		if (!in_array($this->role_id, $this->role->admin_arr)) {
+			if (!in_array($this->menu_id . '_' . ADMIN_LOOK, $admin_role_node)) {
+				$arr['look'] = 0;
+			}
+			if (!in_array($this->menu_id . '_' . ADMIN_ADD, $admin_role_node)) {
+				$arr['add'] = 0;
+			}
+			if (!in_array($this->menu_id . '_' . ADMIN_EDIT, $admin_role_node)) {
+				$arr['edit'] = 0;
+			}
+			if (!in_array($this->menu_id . '_' . ADMIN_DEL, $admin_role_node)) {
+				$arr['del'] = 0;
+			}
+		}
+		return $arr;
+	}
+
 }
 

@@ -25,8 +25,12 @@
                     <td><?=$val['edit_time']?></td>
                     <td>
                         <div class="cz" data-authority='<?=json_encode($val)?>'>
+                            <?php if($denied_arr['edit']){ ?>
                             <span class="role_edit public_edit">编辑</span>
+                            <?php } ?>
+                            <?php if($denied_arr['del']){ ?>
                             <span class="role_del public_del" data-id="<?=$val['id']?>" data-del="<?=$val['id']?>" >删除</span>
+                            <?php } ?>
                         </div>
                     </td>
                 </tr>
@@ -34,7 +38,9 @@
             </tbody>
         </table>
 		<div class="yjbtn">
+            <?php if($denied_arr['add']){ ?>
 			<button type="button" class="sbp_add_btn" id="roleAdd">新增角色</button>
+            <?php } ?>
 		</div>
     </div>
 </section>

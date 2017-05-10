@@ -525,6 +525,7 @@ $config["report_closetime"] = 1800;
 $config["menu"] = array(
 	//key,导航名称,查看,新增,编辑,删除
 	'101' => array('权限管理', 0, 0, 0, 0),
+	'201' => array('新闻公告', 0, 0, 0, 0),
 );
 
 /*

@@ -38,7 +38,9 @@
                 <td><?=$data['status']?></td>
                 <td>
                     <div class="cz">
+						<?php if($denied_arr['edit']){ ?>
                         <span class="yj_ed"><span class="yj_edit f_blue"  data-authority='<?=json_encode($data)?>'>编辑</span></span>
+						<?php } ?>
                     </div>
                 </td>
             </tr>
@@ -46,7 +48,9 @@
             </tbody>
         </table>
 		<div class="yjbtn">
+			<?php if($denied_arr['add']){ ?>
 			<button type="button" class="sbp_add_btn" id="authorityAdd">新增用户</button>
+			<?php } ?>
 		</div>
         <div class="pagebox tc">
             <?=$page;?>

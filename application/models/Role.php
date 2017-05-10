@@ -2,6 +2,8 @@
 
 class Role extends CI_Model {
 
+	public $admin_arr = array(0, 1);
+
 	public function __construct() {
 		parent::__construct();
 	}
@@ -15,14 +17,14 @@ class Role extends CI_Model {
 
 	public function admin_role_node($admin_id) {
 
-		$admin_info= $this->db->select("role_id")->where(array('status' => 1, 'id' => $admin_id))->get("ci_admin")->row_array();
+		$admin_info = $this->db->select("role_id")->where(array('status' => 1, 'id' => $admin_id))->get("ci_admin")->row_array();
 		$role_info = $this->db->select("role_node")->where(array('status' => 1, 'id' => $admin_info['role_id']))->get("ci_role")->row_array();
 		$role_node = explode(',', $role_info['role_node']);
 		return $role_node;
 	}
 
 	public function template() {
-		$menu_list= $this->config->item("menu");
+		$menu_list = $this->config->item("menu");
 		$template = '<table class="table" width="100%" border="0" cellspacing="0" cellpadding="0"><thead><tr><td><label id="authorityAll" width="100"><span class="checkbox_ui"></span>全部权限</label></td></tr></thead><tbody>';
 		foreach ($menu_list as $key => $menu) {
 			$template .= '<tr><td class="categroy"><label class="authority_1st"><span class="checkbox_ui" data-val="' . $key . '"></span>' . $menu['0'] . '</label></td>';
@@ -47,7 +49,7 @@ class Role extends CI_Model {
 
 	public function role_denied($role_id, $admin_id, $role_node) {
 		$admin_role_node = $this->admin_role_node($admin_id);
-		if(!in_array($role_id, array(0,1))){
+		if (!in_array($role_id, $this->admin_arr)) {
 			if (!in_array($role_node, $admin_role_node)) {
 				redirect(base_url() . 'denied/permission');
 				//return false;

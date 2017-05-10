@@ -16,7 +16,7 @@ class Admin extends Lin {
 	}
 
 	public function index() {
-
+		$data['denied_arr']=$this->showAction();
 		$condition = ' status!=0 ';
 		$search = $this->input->get('search');
 		if ($search) {
@@ -164,7 +164,6 @@ class Admin extends Lin {
 	}
 
 	public function info() {
-
 		$info = $this->session->userdata('admin_info');
 		$this->load->view('Admin/info.html', $info);
 	}
@@ -231,6 +230,7 @@ class Admin extends Lin {
 	}
 
 	public function role() {
+		$data['denied_arr']=$this->showAction();
 		$sql = " SELECT id,role_name,remark,add_time,edit_time,role_node from ci_role where status=1 ";
 		$data['role_list'] = $this->db->query($sql)->result_array();
 		$this->load->model('role');
