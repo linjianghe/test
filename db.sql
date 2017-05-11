@@ -40,3 +40,4 @@ CREATE TABLE `ci_role` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_name` (`role_name`)
 );
+
