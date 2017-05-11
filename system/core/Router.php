@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -329,35 +329,33 @@ class CI_Router {
 	 * @param	array	$segments	URI segments
 	 * @return	mixed	URI segments
 	 */
-    protected function _validate_request($segments)
-    {
-        $c = count($segments);
-        // Loop through our segments and return as soon as a controller
-        // is found or when such a directory doesn't exist
-        while ($c-- > 0)
-        {
-            if (PHP_OS == 'WINNT') {
-                $segment = iconv('utf-8', 'gb18030', $segments[0]);
-            } else {
-                $segment = $segments[0];
-            }
+	protected function _validate_request($segments)
+	{
+		$c = count($segments);
+		$directory_override = isset($this->directory);
 
-            $test = $this->directory
-                .ucfirst($this->translate_uri_dashes === TRUE ? str_replace('-', '_', $segment) : $segment);
+		// Loop through our segments and return as soon as a controller
+		// is found or when such a directory doesn't exist
+		while ($c-- > 0)
+		{
+			$test = $this->directory
+				.ucfirst($this->translate_uri_dashes === TRUE ? str_replace('-', '_', $segments[0]) : $segments[0]);
 
-            if ( ! file_exists(APPPATH.'controllers/'.$test.'.php') && is_dir(APPPATH.'controllers/'.$this->directory.$segment))
-            {
-                array_shift($segments);
-                $this->set_directory($segment, TRUE);
-                continue;
-            }
+			if ( ! file_exists(APPPATH.'controllers/'.$test.'.php')
+				&& $directory_override === FALSE
+				&& is_dir(APPPATH.'controllers/'.$this->directory.$segments[0])
+			)
+			{
+				$this->set_directory(array_shift($segments), TRUE);
+				continue;
+			}
 
-            return $segments;
-        }
+			return $segments;
+		}
 
-        // This means that all segments were actually directories
-        return $segments;
-    }
+		// This means that all segments were actually directories
+		return $segments;
+	}
 
 	// --------------------------------------------------------------------
 

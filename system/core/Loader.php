@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -325,19 +325,12 @@ class CI_Loader {
 		{
 			foreach ($this->_ci_model_paths as $mod_path)
 			{
-				if (PHP_OS == 'WINNT') {
-					$path = iconv('utf-8', 'gb18030', $path);
-					$model_os = iconv('utf-8', 'gb18030', $model);
-				} else {
-					$model_os = $model;
-				}
-				
-				if ( ! file_exists($mod_path.'models/'.$path.$model_os.'.php'))
+				if ( ! file_exists($mod_path.'models/'.$path.$model.'.php'))
 				{
 					continue;
 				}
 
-				require_once($mod_path.'models/'.$path.$model_os.'.php');
+				require_once($mod_path.'models/'.$path.$model.'.php');
 				if ( ! class_exists($model, FALSE))
 				{
 					throw new RuntimeException($mod_path."models/".$path.$model.".php exists, but doesn't declare class ".$model);
@@ -493,7 +486,7 @@ class CI_Loader {
 	 */
 	public function view($view, $vars = array(), $return = FALSE)
 	{
-		return $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
+		return $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_prepare_view_vars($vars), '_ci_return' => $return));
 	}
 
 	// --------------------------------------------------------------------
@@ -526,19 +519,13 @@ class CI_Loader {
 	 */
 	public function vars($vars, $val = '')
 	{
-		if (is_string($vars))
-		{
-			$vars = array($vars => $val);
-		}
+		$vars = is_string($vars)
+			? array($vars => $val)
+			: $this->_ci_prepare_view_vars($vars);
 
-		$vars = $this->_ci_object_to_array($vars);
-
-		if (is_array($vars) && count($vars) > 0)
+		foreach ($vars as $key => $val)
 		{
-			foreach ($vars as $key => $val)
-			{
-				$this->_ci_cached_vars[$key] = $val;
-			}
+			$this->_ci_cached_vars[$key] = $val;
 		}
 
 		return $this;
@@ -598,15 +585,21 @@ class CI_Loader {
 	 */
 	public function helper($helpers = array())
 	{
-		foreach ($this->_ci_prep_filename($helpers, '_helper') as $helper)
+		is_array($helpers) OR $helpers = array($helpers);
+		foreach ($helpers as &$helper)
 		{
+			$filename = basename($helper);
+			$filepath = ($filename === $helper) ? '' : substr($helper, 0, strlen($helper) - strlen($filename));
+			$filename = strtolower(preg_replace('#(_helper)?(\.php)?$#i', '', $filename)).'_helper';
+			$helper   = $filepath.$filename;
+
 			if (isset($this->_ci_helpers[$helper]))
 			{
 				continue;
 			}
 
 			// Is this a helper extension request?
-			$ext_helper = config_item('subclass_prefix').$helper;
+			$ext_helper = config_item('subclass_prefix').$filename;
 			$ext_loaded = FALSE;
 			foreach ($this->_ci_helper_paths as $path)
 			{
@@ -903,10 +896,6 @@ class CI_Loader {
 
 			foreach ($this->_ci_view_paths as $_ci_view_file => $cascade)
 			{
-				if (PHP_OS == 'WINNT') {
-					$_ci_file = iconv('utf-8', 'gb18030', $_ci_file);
-				}
-
 				if (file_exists($_ci_view_file.$_ci_file))
 				{
 					$_ci_path = $_ci_view_file.$_ci_file;
@@ -945,18 +934,7 @@ class CI_Loader {
 		 * the two types and cache them so that views that are embedded within
 		 * other views can have access to these variables.
 		 */
-		if (is_array($_ci_vars))
-		{
-			foreach (array_keys($_ci_vars) as $key)
-			{
-				if (strncmp($key, '_ci_', 4) === 0)
-				{
-					unset($_ci_vars[$key]);
-				}
-			}
-
-			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
-		}
+		empty($_ci_vars) OR $this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
 		extract($this->_ci_cached_vars);
 
 		/*
@@ -1117,7 +1095,7 @@ class CI_Loader {
 	 * @used-by	CI_Loader::_ci_load_library()
 	 * @uses	CI_Loader::_ci_init_library()
 	 *
-	 * @param	string	$library	Library name to load
+	 * @param	string	$library_name	Library name to load
 	 * @param	string	$file_path	Path to the library filename, relative to libraries/
 	 * @param	mixed	$params		Optional parameters to pass to the class constructor
 	 * @param	string	$object_name	Optional object name to assign to
@@ -1387,17 +1365,32 @@ class CI_Loader {
 	// --------------------------------------------------------------------
 
 	/**
-	 * CI Object to Array translator
+	 * Prepare variables for _ci_vars, to be later extract()-ed inside views
 	 *
-	 * Takes an object as input and converts the class variables to
-	 * an associative array with key/value pairs.
+	 * Converts objects to associative arrays and filters-out internal
+	 * variable names (i.e. keys prefixed with '_ci_').
 	 *
-	 * @param	object	$object	Object data to translate
+	 * @param	mixed	$vars
 	 * @return	array
 	 */
-	protected function _ci_object_to_array($object)
+	protected function _ci_prepare_view_vars($vars)
 	{
-		return is_object($object) ? get_object_vars($object) : $object;
+		if ( ! is_array($vars))
+		{
+			$vars = is_object($vars)
+				? get_object_vars($vars)
+				: array();
+		}
+
+		foreach (array_keys($vars) as $key)
+		{
+			if (strncmp($key, '_ci_', 4) === 0)
+			{
+				unset($vars[$key]);
+			}
+		}
+
+		return $vars;
 	}
 
 	// --------------------------------------------------------------------
@@ -1415,34 +1408,4 @@ class CI_Loader {
 		$CI =& get_instance();
 		return $CI->$component;
 	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Prep filename
-	 *
-	 * This function prepares filenames of various items to
-	 * make their loading more reliable.
-	 *
-	 * @param	string|string[]	$filename	Filename(s)
-	 * @param 	string		$extension	Filename extension
-	 * @return	array
-	 */
-	protected function _ci_prep_filename($filename, $extension)
-	{
-		if ( ! is_array($filename))
-		{
-			return array(strtolower(str_replace(array($extension, '.php'), '', $filename).$extension));
-		}
-		else
-		{
-			foreach ($filename as $key => $val)
-			{
-				$filename[$key] = strtolower(str_replace(array($extension, '.php'), '', $val).$extension);
-			}
-
-			return $filename;
-		}
-	}
-
 }
