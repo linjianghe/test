@@ -16,6 +16,7 @@ class Admin extends Lin {
 	}
 
 	public function index() {
+		
 		$data['denied_arr']=$this->showAction();
 		$condition = ' status!=0 ';
 		$search = $this->input->get('search');
@@ -46,6 +47,7 @@ class Admin extends Lin {
 	}
 
 	public function login() {
+		
 		if ($this->username) {
 			redirect(base_url() . 'home/index');
 		}
@@ -139,6 +141,7 @@ class Admin extends Lin {
 	}
 
 	public function logout() {
+		
 		$this->session->unset_userdata('admin_info');
 		redirect(base_url() . 'admin/login');
 	}
@@ -164,6 +167,7 @@ class Admin extends Lin {
 	}
 
 	public function info() {
+		
 		$info = $this->session->userdata('admin_info');
 		$this->load->view('Admin/info.html', $info);
 	}
@@ -230,6 +234,7 @@ class Admin extends Lin {
 	}
 
 	public function role() {
+		
 		$data['denied_arr']=$this->showAction();
 		$sql = " SELECT id,role_name,remark,add_time,edit_time,role_node from ci_role where status=1 ";
 		$data['role_list'] = $this->db->query($sql)->result_array();
@@ -276,6 +281,7 @@ class Admin extends Lin {
 	 * 第二种：使用纯真ＩＰ库
 	 */
 	private function ipaddr($IP) {
+		
 		include_once(APPPATH . "/libraries/Ipcity.php");
 		$arr = ipcity::find($IP);
 		unset($arr[0]);
