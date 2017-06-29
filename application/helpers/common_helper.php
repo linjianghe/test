@@ -13,10 +13,28 @@ if (!function_exists('json_return')) {
 
 }
 
+if (!function_exists('account_preg')) {
+	function account_preg($account) {
+		if (!preg_match("/^[\w~!@#$%^&*()]{6,20}$/", $account)) {
+			json_return(500, '账号格式有误');
+		}
+		return true;
+	}
+}
+
 if (!function_exists('tel_preg')) {
 	function tel_preg($telephone) {
 		if (!preg_match('/^13\d{9}|14[57]\d{8}|15[0-35-9]\d{8}|18\d{9}|170[0-35-9]\d{7}|171[89]\d{7}|17[678]\d{8}$/', $telephone)) {
 			json_return(500, '手机号格式有误');
+		}
+		return true;
+	}
+}
+
+if (!function_exists('email_preg')) {
+	function email_preg($email) {
+		if (!preg_match('/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/', $email)) {
+			json_return(500, '邮箱格式有误');
 		}
 		return true;
 	}
@@ -85,4 +103,143 @@ if (!function_exists('password_check')) {
 		return $result;
 	}
 
+}
+
+
+/*
+* 创建多级子目录
+*/
+if (!function_exists('mkdirs')) {
+	function mkdirs($dir) {
+		return is_dir($dir) or (mkdirs(dirname($dir)) and mkdir($dir, 0777));
+	}
+}
+
+/*
+* @参数: $title，string
+* @参数: $content，string
+* @参数: $sendto，string (支持多个以数组形式array())
+*/
+function send_email($title, $content, $sendto) {
+	include_once('./system/libraries/Email.php');
+	$config['protocol'] = 'smtp';
+	$config['smtp_host'] = SMTP_HOST;
+	$config['smtp_user'] = SMTP_USER;
+	$config['smtp_pass'] = SMTP_PASS;
+	$config['smtp_port'] = 25;
+	$config['smtp_timeout'] = 5;
+	$config['mailtype'] = 'html';
+	$config['charset'] = 'utf-8';
+	$config['wordwrap'] = TRUE;
+	$Email = new CI_Email();
+	$Email->initialize($config);
+	$Email->from(SMTP_USER, '邮件发送');
+	$Email->to($sendto);
+
+	$Email->subject($title);
+	$Email->message($content);
+	$return = $Email->send();
+	if ($return) {
+		return '邮件已发送';
+	} else {
+		return $Email->print_debugger(array('headers'));
+	}
+}
+
+if (!function_exists('is_phone')) {
+	/*
+	 * 判断是否手机号码
+	 * @参数：手机号
+	 * @返回值: boolean布尔型，true=是，false=否
+	 * */
+	function is_phone($phone) {
+		if (!preg_match('/^1\d{10}$/', $phone)) {
+			return false;
+		}
+		$operator = is_phone_operator($phone);
+		if (!in_array($operator, array(1, 2, 3))) {    //不是三大运营商的手机号码
+			return false;
+		}
+		return true;
+	}
+}
+
+if (!function_exists('is_phone_operator')) {
+	/**
+	 * 判断手机号的类型
+	 * 更新时间 2016-11-07
+	 * @param $mobile
+	 * @return int  1:电信 2:移动 3:联通 0:未知
+	 */
+	function is_phone_operator($phone) {
+
+		$segment = substr($phone, 0, 3);
+		$segment = in_array($segment, array('170', '171')) ? substr($phone, 0, 4) : $segment;
+		switch ($segment) {
+			case 133:
+			case 153:
+			case 1700:
+			case 1701:
+			case 1702:
+			case 177:
+			case 180:
+			case 181:
+			case 189:
+			case 173:
+				return 1;   //电信
+
+			case 134:
+			case 135:
+			case 136:
+			case 137:
+			case 138:
+			case 139:
+			case 147:
+			case 150:
+			case 151:
+			case 152:
+			case 157:
+			case 158:
+			case 159:
+			case 1703:
+			case 1705:
+			case 1706:
+			case 178:
+			case 182:
+			case 183:
+			case 184:
+			case 187:
+			case 188:
+				return 2;   //移动
+
+			case 130:
+			case 131:
+			case 132:
+			case 145:
+			case 155:
+			case 156:
+			case 1707:
+			case 1708:
+			case 1709:
+			case 1713:
+			case 1718:
+			case 1719:
+			case 176:
+			case 185:
+			case 186:
+				return 3;   //联通
+
+			default :
+				return 0;
+		}
+	}
+
+}
+
+
+/*
+ * 生成32位的唯一字符串
+ */
+function unique_name() {
+	return md5(uniqid(mt_rand(), true));
 }
