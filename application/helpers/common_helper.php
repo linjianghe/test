@@ -243,3 +243,69 @@ if (!function_exists('is_phone_operator')) {
 function unique_name() {
 	return md5(uniqid(mt_rand(), true));
 }
+
+
+
+/*
+* JPush推送，IOS、android设备（单条）
+* https://www.jpush.cn/
+* @参数 $platform ios，android 必填
+* @参数 $addAliasid 极光绑定id 必填
+* @标题 $title 弹框标题 可填
+*/
+function JPush($platform, $addAliasid, $title) {
+
+	require_once(APPPATH . "libraries/JPush/JPush.php");
+
+	$app_key = JPUSH_APP_KEY;
+	$master_secret = JPUSH_APP_SECRET;
+
+	$client = new JPush($app_key, $master_secret);
+
+	try {
+		$result = $client->push()
+			->setPlatform($platform)
+			->addAlias($addAliasid)
+			->setNotificationAlert($title)
+			->send();
+		return $result->data->msg_id;
+	} catch (Exception $e) {
+		return $e->getmessage();
+	}
+
+}
+
+/*
+* JPush推送，自定义消息推送消息给IOS、android设备（单条）
+* https://www.jpush.cn/
+* @参数 $platform ios，android 必填
+* @参数 $addAliasid 极光绑定id 必填
+* @标题 $title 弹框标题 可填
+* @标题 $content 推送数据 array 可填
+* @推送数据
+* @IOS_voice  warning.caf(警告),default（默认）,null（无）
+* @IOS_bg 图标背景 +1（出现加一背景）,false（无背景）
+*/
+function JPush_custom($platform, $addAliasid, $title, $content = array(), $IOS_voice = 'warning.caf', $IOS_bg = '+1') {
+
+	require_once(APPPATH . "libraries/JPush/JPush.php");
+
+	$app_key = JPUSH_APP_KEY;
+	$master_secret = JPUSH_APP_SECRET;
+
+	$client = new JPush($app_key, $master_secret);
+	try {
+		$result = $client->push()
+			->setPlatform($platform)
+			->addAlias($addAliasid)
+			->setNotificationAlert($title)
+			->addAndroidNotification($title, '', 1, $content)
+			->addIosNotification($title, $IOS_voice, $IOS_bg, true, 'iOS category', $content)
+			->setOptions(100000, 3600, null, JPUSH_APP_CERT)
+			->send();
+		return $result->data->msg_id;
+	} catch (Exception $e) {
+		return $e->getmessage();
+	}
+
+}
