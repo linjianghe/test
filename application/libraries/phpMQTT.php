@@ -74,8 +74,9 @@ class phpMQTT {
 		if($username) $this->username = $username;
 		if($password) $this->password = $password;
 
+
 		//$address = gethostbyname($this->address);
-		$address = $this->address;
+		$address = $this->address;	
 		$this->socket = fsockopen($address, $this->port, $errno, $errstr, 60);
 
 		if (!$this->socket ) {
