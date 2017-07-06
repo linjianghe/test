@@ -64,7 +64,8 @@ class Admin extends Lin {
 		if ($admin_info['status'] == '1' && password_check($admin_info['password'], $password)) {
 
 			$this->session->set_userdata('admin_info', $admin_info);
-			json_return(200, '登录成功', array('url' => base_url() . 'home/index'));
+			//json_return(200, '登录成功', array('url' => base_url() . 'home/index'));
+			redirect(base_url() . 'home/index');
 
 		} else if ($admin_info['status'] == '2') {
 
