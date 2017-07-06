@@ -66,7 +66,32 @@ class Lin extends CI_Controller {
 		$this->pagination->initialize($config);
 		return $this->pagination->create_links();
 	}
+	/*
+	 * 如果只要简单分页数据，调用 分页 方法，如果还要当前页等信息，调用此方法
+	 * */
+	protected function page_info($count, $per_page = 10, $url = '') {
+		$cur_page = $this->input->get('cur_page');
+		$cur_page = is_numeric($cur_page) && $cur_page >= 0 ? $cur_page : 0;
 
+		if (empty($url)) {
+			$GET = $this->input->get();
+			unset($GET["cur_page"]);
+			$this->load->helper('url');
+			$url = '/' . uri_string() . '?' . http_build_query($GET);
+		}
+
+		if ($cur_page >= $count && $count != 0) {
+			$floor = $count % $per_page != 0 ? $count % $per_page : $per_page;
+			$cur_page = $count - $floor;
+		}
+		$array = array();
+		$array['per_page'] = $per_page;
+		$array['cur_page'] = $cur_page;
+		$array['count'] = ceil($count / $per_page);
+		$array['url'] = $url;
+		$array['page'] = $this->page($count, $per_page, $url);
+		return $array;
+	}
 	protected function upload($file, $filename, $type = 'gif|png|jpg|jpeg|bmp', $path = 'news', $size = '2048') {
 
 		$config['upload_path'] = UPLOADS . $path . '/';
