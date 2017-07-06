@@ -55,7 +55,7 @@ class Lin extends CI_Controller {
 		$config['total_rows'] = $count;
 		$config['per_page'] = $per_page;
 		$config['page_query_string'] = TRUE;
-		$config['query_string_segment'] = '位置';
+		$config['query_string_segment'] = 'cur_page';
 		$config['first_link'] = '首页';
 		$config['last_link'] = '最后一页';
 		$config['display_pages'] = true;
@@ -74,10 +74,7 @@ class Lin extends CI_Controller {
 		$config['max_size'] = $size;
 		$config['file_name'] = $filename;
 		if (!is_dir($path)) {
-			$mkdir = mkdir($path, 0777, true);
-			if (!$mkdir) {
-				die('创建目录失败');
-			}
+			mkdirs($path);
 		}
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload($file)) {
