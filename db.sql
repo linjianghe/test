@@ -5,8 +5,8 @@ CREATE TABLE `ci_session` (
   `ip_address` varchar(45) NOT NULL,
   `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
   `data` blob NOT NULL,
-  `add_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `edit_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `add_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `ci_sessions_timestamp` (`timestamp`)
 );
@@ -33,8 +33,8 @@ CREATE TABLE `ci_role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `role_name` varchar(20) NOT NULL,
   `remark` varchar(50) DEFAULT NULL,
-  `add_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `edit_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `add_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:正常；2:删除',
   `role_node` varchar(2000) DEFAULT '' COMMENT '节点编号',
   PRIMARY KEY (`id`),
