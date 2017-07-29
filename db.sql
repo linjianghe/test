@@ -25,7 +25,7 @@ CREATE TABLE `ci_admin` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`) USING BTREE
 );
-
+INSERT INTO ci_admin VALUES ('1', 'admin', '0a3be13795535079888e5adc9a7cf6b5', '0', '', '1', '2017-07-29 19:16:53', '2017-07-29 19:16:53');
 
 /*Table structure for table `角色表` */
 
