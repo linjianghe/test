@@ -1,142 +1,90 @@
 <?php $this->load->view('header.html');?>
-<section class="embed_page" id="Admin" style="min-width: 1450px;">
-    <header class="authority_manager_menu tab_menu">
-        <ul>
-            <li class="current"><a href="/admin/index">账号</a></li><li><a href="/admin/role">角色</a></li>
-        </ul>
-    </header>
-    <div class="authority_data_list">
+<style type="text/css">
+    .navbar .nav > li .dropdown-menu {
+        margin: 0;
+    }
+    .navbar .nav > li:hover .dropdown-menu {
+        display: block;
+    }
+</style>
+<div class="templatemo-content-wrapper">
+    <div class="templatemo-content">
+        <ol class="breadcrumb">
+            <li><a href="/admin/index">管理中心</a></li>
+            <li><a href="/admin/index">首页</a></li>
+        </ol>
+        <div class="table-responsive">
 
-        <div class="manager_search">
-            <div class="search_box">
-                <form action="/admin/index" class="autocomplete_form">
-                    <label>用户名、姓名</label>
-                    <input type="text" class="tips_click" name="search" value="<?=$search?>" />
-                    <button type="submit" class="autocomplete_btn">搜索</button>
-                </form>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>姓名</th>
+                    <th>添加时间</th>
+                    <th>修改时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($datalist as $key=>$data){ ?>
+                <tr>
+                    <td><?=$data['username']?></td>
+                    <td><?=$data['name']?></td>
+                    <td><?=$data['add_time']?></td>
+                    <td><?=$data['edit_time']?></td>
+                    <td><?=$data['status']==1 ? '正常' : '删除'?></td>
+                    <td><span class="btn btn-link admin_edit" data-id="<?=$data['id']?>">编辑</span></td>
+                </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <?=$page?>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding:40px 0;">
+                    <form class="form-horizontal" role="form">
+                        <input type="hidden" class="form-control" id="adminid">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">姓名：</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="请输入姓名">
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="status" class="col-sm-2 control-label">角色：</label>
+                            <div class="col-sm-10 control-label">
+                            <select name="role_id"  id="role_id" class="col-sm-4">
+                                <?php foreach($rolelist as $role){ ?>
+                                <option value="<?=$role['id']?>"><?=$role['role_name']?></option>
+                                <?php } ?>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">状态：</label>
+                            <div class="col-sm-10 control-label">
+                                <select name="status"  id="status" class="col-sm-4">
+                                    <option value="1">正常</option>
+                                    <option value="2">禁用</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="save();">Save</button>
+                </div>
             </div>
         </div>
-
-        <table class="table_m1 tb1" width="100%" border="0" cellspacing="0" cellpadding="0">
-            <thead>
-            <tr>
-                <th scope="col" >用户名</th>
-                <th scope="col" class="bg_blue">姓名</th>
-                <th scope="col" >创建日期</th>
-                <th scope="col" class="bg_blue">修改日期</th>
-                <th scope="col" >账号状态</th>
-                <th scope="col" class="bg_blue">相关操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach($datalist as $key=>$data){ ?>
-            <tr <?php if($key%2==0){echo 'class="bg_grey"';}?> >
-                <td><?=$data['username']?></td>
-                <td><?=$data['name']?></td>
-                <td><?=$data['add_time']?></td>
-                <td><?=$data['edit_time']?></td>
-                <td><?=$data['status']?></td>
-                <td>
-                    <div class="cz">
-						<?php if($denied_arr['edit']){ ?>
-                        <span class="yj_ed"><span class="yj_edit f_blue"  data-authority='<?=json_encode($data)?>'>编辑</span></span>
-						<?php } ?>
-                    </div>
-                </td>
-            </tr>
-            <?php } ?>
-            </tbody>
-        </table>
-		<div class="yjbtn">
-			<?php if($denied_arr['add']){ ?>
-			<button type="button" class="sbp_add_btn" id="authorityAdd">新增用户</button>
-			<?php } ?>
-		</div>
-        <div class="pagebox tc">
-            <?=$page;?>
-            <?php if($page): ?>
-            <form  method="get" onsubmit="return false;">
-                <span>跳转到：</span>
-                <input name="cur_page" type="text" />
-                <input name="per_page" type="hidden" value="<?=$per_page;?>"/>
-                <button type="submit" onclick="gotoPage()">GO</button>
-            </form>
-            <?php endif; ?>
-        </div>
     </div>
-</section>
-<?php $this->load->view('footer.html');?>
-
-<style type="text/css">
-    .authority_box{padding:2em 1em 1.5em;}
-    .authority_box li{margin-bottom: 1em;}
-    .authority_box li label{display: inline-block;width:10em;text-align: right;}
-    .authority_box li input{width:180px;}
-    .authority_box li select{width:190px;}
-</style>
-<script type="html/module" id="uTemplate">
-    <div class="authority_box">
-        <ul>
-            <li class="authority_login_name">
-                <label>姓名：</label>
-                <input type="text" placeholder="请输入2-4字的中文名称"  id="name" title="请输入2-4字的中文名称" />
-            </li>
-            <li class="authority_id">
-                <label>所属角色：</label>
-                <select id="authorityId">
-                    <?php foreach($rolelist as $role){ ?>
-                    <option value="<?=$role['id']?>"><?=$role['role_name']?></option>
-                    <?php } ?>
-                </select>
-            </li>
-            <li class="authority_disabled">
-                <label>是否禁用：</label>
-                <select>
-                    <option value="1">否</option>
-                    <option value="2">是</option>
-                </select>
-            </li>
-        </ul>
-    </div>
-</script>
-<script type="html/module" id="uTemplateadd">
-    <div class="authority_box">
-        <ul>
-            <li class="authority_username">
-                <label>用户名：</label>
-                <input type="text" placeholder="请输入6-20字的英文"  id="addusername" title="请输入6-20字的英文" />
-            </li>
-            <li class="authority_login_name">
-                <label>姓名：</label>
-                <input type="text" placeholder="请输入2-4字的中文名称"  id="addname" title="请输入2-4字的中文名称" />
-            </li>
-            <li class="authority_password">
-                <label>密码：</label>
-                <input type="password" placeholder="请输入密码"  id="addpassword" title="请输入密码" />
-            </li>
-            <li class="authority_id">
-                <label>所属角色：</label>
-                <select id="addauthorityId">
-                    <?php foreach($rolelist as $role){ ?>
-                    <option value="<?=$role['id']?>"><?=$role['role_name']?></option>
-                    <?php } ?>
-                </select>
-            </li>
-            <li class="authority_disabled">
-                <label>是否禁用：</label>
-                <select id="addstatus">
-                    <option value="1">否</option>
-                    <option value="2">是</option>
-                </select>
-            </li>
-        </ul>
-    </div>
-</script>
-<script>
-    function gotoPage(){
-        var cur_page = $("input[name='cur_page']").val();
-        var per_page = $("input[name='per_page']").val();
-        var search = $("input[name='search']").val();
-        window.location.href = '/Admin/admin/index?search = '+search+'&cur_page='+ ((cur_page-1)*per_page);
-    }
-</script>
+    <?php $this->load->view('footer.html');?>

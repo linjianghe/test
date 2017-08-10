@@ -1,5 +1,39 @@
-<script type="text/javascript" src="/assets/js/wow.min.js"></script>
-<script type="text/javascript" src="/assets/js/json2.js"></script>
-<script data-main="/assets/js/main" src="/assets/js/require.js"></script>
+<footer class="templatemo-footer">
+    <div class="templatemo-copyright">
+        <p>Copyright &copy; lin</p>
+    </div>
+</footer>
+</div>
+
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/templatemo_script.js"></script>
+<script>
+
+    $(document).ready(function() {
+        $(".admin_edit").click(function() {
+            adminid = $(this).data('id');
+            $.post("/admin/get_info", {id:adminid}, function(data){
+                $("#adminid").val(data.data.id);
+                $("#username").val(data.data.username);
+                $("#name").val(data.data.name);
+            },'json');
+            $("#myModal").modal();
+        });
+    });
+    function save(){
+        var adminid = $("#adminid").val();
+        var username = $("#username").val();
+        var name = $("#name").val();
+        $.post('/admin/update',{id:adminid,username:username,name:name}, function(data){
+            if(data.code==200){
+                $('#myModal').modal('hide');
+                window.location.reload();
+            } else {
+                alert('修改失败');
+            }
+        },'json');
+    }
+</script>
 </body>
 </html>

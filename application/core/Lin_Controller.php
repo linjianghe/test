@@ -61,8 +61,20 @@ class Lin extends CI_Controller {
 		$config['display_pages'] = true;
 		$config['prev_link'] = '上一页';
 		$config['next_link'] = '下一页';
-		$config['cur_tag_open'] = '<a class="current" href ="javascript:void(0);" >';
-		$config['cur_tag_close'] = '</a>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a href ="javascript:void(0);" >';
+		$config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['full_tag_open'] = '<ul class="pagination pull-right">';
+        $config['full_tag_close'] = '</ul>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
 		$this->pagination->initialize($config);
 		return $this->pagination->create_links();
 	}

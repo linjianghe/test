@@ -29,7 +29,7 @@ class Admin extends Lin {
 		$cur_page = $this->input->get('cur_page');
 		$cur_page = is_numeric($cur_page) && $cur_page >= 0 ? $cur_page : 0;
 
-		$per_page = PAGE_NUM;
+		$per_page = 1;
 		if ($cur_page >= $count && $count != 0) {
 			$remainder = $count % $per_page != 0 ? $count % $per_page : $per_page;
 			$cur_page = $count - $remainder;
@@ -38,7 +38,7 @@ class Admin extends Lin {
 		$data['per_page'] = $per_page;
 		$data['cur_page'] = $cur_page;
 		$data['page'] = $this->page($count, $per_page, '/admin/index?search=' . $search);
-		$sql = " SELECT id,username,name,add_time,status,edit_time,role_id FROM ci_admin WHERE {$condition} order by add_time desc limit {$cur_page},{$per_page} ";
+		$sql = " SELECT id,username,name,add_time,status,edit_time,role_id FROM ci_admin WHERE {$condition} order by id desc limit {$cur_page},{$per_page} ";
 		$data['datalist'] = $this->db->query($sql)->result_array();
 		$data['rolelist'] = $this->db->where('status', 1)->get('ci_role')->result_array();
 
@@ -73,27 +73,42 @@ class Admin extends Lin {
 
 		} else {
 
-			json_return(500, '手机号或密码错误');
+			json_return(500, '帐号或密码错误');
 
 		}
 	}
 
+	public function get_info(){
+
+        $id = $this->input->post('id');
+        if (!$id) {
+            json_return(501, '管理员编号不能为空');
+        }
+        $data = $this->db->select()->where('id', $id)->get('ci_admin')->row_array();
+        if ($data) {
+            json_return(200, '成功',$data);
+        } else {
+            json_return(500, '没有数据');
+        }
+    }
+
 	public function update() {
 
 		$id = $this->input->post('id');
-		$role_id = $this->input->post('role_id');
-		$status = $this->input->post('status');
+		//$role_id = $this->input->post('role_id');
+		//$status = $this->input->post('status');
 		$name = $this->input->post('name');
 		if (!$id) {
 			json_return(501, '管理员编号不能为空');
 		}
+		/*
 		if (!$role_id) {
-			json_return(502, '身份不能为空');
-		}
+			json_return(502, '角色不能为空');
+		}*/
 
 		$data = array(
-			'role_id' => $role_id,
-			'status' => $status,
+			//'role_id' => $role_id,
+			//'status' => $status,
 			'name' => $name,
 		);
 		$result = $this->db->where('id', $id)->update('ci_admin', $data);
