@@ -1,0 +1,22 @@
+<ul class="templatemo-sidebar-menu">
+	<li <?=$this->control=='home' ? 'class="active"' : '' ?> ><a href="/home/index"><i class="fa fa-home"></i>控制台</a></li>
+	<li <?=$this->control=='admin' ? 'class="active"' : '' ?> ><a href="/admin/index"><i class="fa fa-users"></i>帐号管理</a></li>
+	<li><a href="javascript:;" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>退出</a></li>
+</ul>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">您确定要退出登录吗？</h4>
+			</div>
+			<div class="modal-footer">
+				<a href="/admin/logout" class="btn btn-primary">是</a>
+				<button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
