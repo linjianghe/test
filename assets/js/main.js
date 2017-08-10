@@ -33,9 +33,12 @@ function save(){
     $.post('/admin/update',{id:adminid,username:username,name:name}, function(data){
         if(data.code==200){
             $('#myModal').modal('hide');
-            window.location.reload();
+            $("#success").modal("show");
+            setTimeout(function(){window.location.reload();},1000);
         } else {
-            alert('修改失败');
+            $('#myModal').modal('hide');
+            $('#error').modal('show');
+            setTimeout(function(){$("#error").modal("hide")},1000);
         }
     },'json');
 }
