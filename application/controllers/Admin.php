@@ -54,6 +54,10 @@ class Admin extends Lin {
 		$this->load->view('Admin/login.html');
 	}
 
+    public function test() {
+        $this->load->view('Admin/test.html');
+    }
+
 	public function login_check() {
 
 		$username = $this->input->post('username');

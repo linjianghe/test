@@ -42,3 +42,15 @@ function save(){
         }
     },'json');
 }
+
+function CheckAll(val,classname) {
+    $("."+classname).each(function() {
+        this.checked = val;
+    });
+}
+
+function Checkover(val) {
+    $("input:checkbox").each(function() {
+        this.checked = val;
+    });
+}
